@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='us-ascii'?>
+<annotation>
+	<folder>C</folder>
+	<filename>549.jpg</filename>
+	<path>D:\&#33292;&#35937;\&#25968;&#25454;&#38598;&#20998;&#31867;\C\549.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>708</width>
+		<height>895</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>White-Greasy</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>5</xmin>
+			<ymin>281</ymin>
+			<xmax>633</xmax>
+			<ymax>856</ymax>
+		</bndbox>
+	</object>
+</annotation>

@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='us-ascii'?>
+<annotation>
+	<folder>A</folder>
+	<filename>101.jpg</filename>
+	<path>D:\&#33292;&#35937;\&#25968;&#25454;&#38598;&#20998;&#31867;\A\101.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>424</width>
+		<height>424</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>Mirror-Approximated</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>66</xmin>
+			<ymin>107</ymin>
+			<xmax>363</xmax>
+			<ymax>383</ymax>
+		</bndbox>
+	</object>
+</annotation>
