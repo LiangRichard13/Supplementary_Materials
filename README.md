@@ -18,6 +18,7 @@ The repository is modularized to separate offline knowledge construction, core a
 ```text
 MedMirror_Code/
 ├── algorithm/                  # Algorithmic documentation and paper supplements
+├── doc/                        # Experimental setup and external KB specs
 ├── data/                       # Datasets, corpus files, and offline artifacts
 ├── model/                      # Local embedding and ranking model directories
 ├── prompts/                    # Centralized multi-agent prompt templates
@@ -29,6 +30,9 @@ MedMirror_Code/
 ### Directory Details
 
 - `algorithm/`: Contains theoretical formulations and architectural diagrams (e.g., `Paper_Algorithm.pdf`) that supplement the main manuscript, providing a detailed breakdown of the system's operational logic.
+- `doc/`: Provides human-readable documentation that complements the paper and code:
+  - `Experimental Setup Details.md`: Describes dataset splits, evaluation protocol, hyperparameters, hardware, and other experimental settings to support reproducibility.
+  - `Detailed Specifications of External Knowledge Bases.md`: Specifies schema, construction pipeline, and usage patterns of external knowledge bases (e.g., Syndrome Knowledge Graph, medical case databases).
 - `data/`: Hosts the raw and processed datasets utilized in our experiments.
   - Includes the VOC-formatted 5-class tongue image dataset (`tongue_5_class_dataset/`).
   - Contains the foundational corpora for knowledge graph construction (`syndrome_knowledge_graph/`), medical case vectorization (`syndrome_medical_cases/`), and hierarchical taxonomies (`syndrome_taxonomy/`).
