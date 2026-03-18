@@ -26,12 +26,39 @@ To comprehensively assess the incremental value of the proposed reflective mecha
 
 **Table 1: Overview of Baseline Configurations**
 
-| Category | Models / Frameworks | Description |
-| --- | --- | --- |
-| **General LLMs** | DeepSeek-V3, Kimi-K2, Gemini-2.0-flash, GPT-4o, Claude-3.7 | State-of-the-art foundational models evaluated for generalized medical reasoning. |
-| **TCM-Specific LLMs** | HuaTuoGPT-o1-7B, SunSimiao-7B, Carebot-8B | Domain-adapted models fine-tuned specifically on traditional Chinese medicine corpora. |
-| **Multi-Agent Systems** | Voting (3 agents), Debate (3 agents, 2 rounds) | Collaborative frameworks designed to enhance reasoning through consensus or iterative critique. |
-| **RAG Baseline** | Single-pass Retrieval-Augmented Generation | Shares the identical Medical Cases Database and Knowledge Graph with MedMirror to isolate architectural gains from knowledge augmentation. |
+
+| Category                | Models / Frameworks                                        | Description                                                                                                                                |
+| ----------------------- | ---------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| **General LLMs**        | DeepSeek-V3, Kimi-K2, Gemini-2.0-flash, GPT-4o, Claude-3.7 | State-of-the-art foundational models evaluated for generalized medical reasoning.                                                          |
+| **TCM-Specific LLMs**   | HuaTuoGPT-o1-7B, SunSimiao-7B, Carebot-8B                  | Domain-adapted models fine-tuned specifically on traditional Chinese medicine corpora.                                                     |
+| **Multi-Agent Systems** | Voting (3 agents), Debate (3 agents, 2 rounds)             | Collaborative frameworks designed to enhance reasoning through consensus or iterative critique.                                            |
+| **RAG Baseline**        | Single-pass Retrieval-Augmented Generation                 | Shares the identical Medical Cases Database and Knowledge Graph with MedMirror to isolate architectural gains from knowledge augmentation. |
+
+
+### 1.3 Cross-Domain Evaluation (Western Medicine, CMB)
+
+To rigorously scrutinize the architectural versatility and cross-domain generalizability of **MedMirror**, we extend our empirical assessment beyond Traditional Chinese Medicine (TCM) into the domain of Western Medicine (WM), using the **CMB** benchmark (Wang et al., 2024) as the primary evaluation suite.
+
+**Table 2: Cross-domain tasks and evaluation design (WM / CMB)**
+
+
+| Task                                     | Data Source & Split                                                                                                                                                                                                                                                                 | Input to System                                                                                                                                                           | System Adaptation                                                                     | Metric                                                                                   |
+| ---------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| **Multiple-Choice Questions (MCQ)**      | Curated subset of **1,200** items from CMB, aligned with WM exam paradigms: Licensed Physician Exam (**n=400**), Specialized Clinical Medicine Exam (**n=400**), Postgraduate Medical Entrance Exam (**n=400**). Predominantly single-choice with a minority of multi-choice items. | Question stem + options                                                                                                                                                   | N/A (direct answering)                                                                | **Accuracy** = \frac{\text{correct}}{\text{total}}                                       |
+| **Clinical diagnostic QA (interactive)** | **74** authentic clinical cases from CMB                                                                                                                                                                                                                                            | Concise **chief complaint** extracted from full record as initial user input; an auxiliary LLM agent with full record simulates the patient to answer iterative inquiries | Evaluate **READ-Loop** collaboration (CIA ↔ SDA) under realistic information scarcity | **Diagnostic accuracy** = proportion of cases where final diagnosis matches ground truth |
+
+
+#### 1.3.1 MCQ task setup
+
+For the WM MCQ task, we curated 1,200 questions from the CMB to reflect common clinical testing settings, spanning three representative examinations (each n=400). Performance is measured by accuracy, defined as the proportion of correctly answered questions over the full set.
+
+#### 1.3.2 SDA adaptation for WM
+
+To adapt the Syndrome Differentiation Agent (SDA) to Western Medicine, we **substituted its internal TCM knowledge bases** with a **WM-specific vector database** constructed from the CMB training data. In this cross-domain setting, the SDA uses a **single-step Retrieval-Augmented Generation (RAG)** process to produce evidence-grounded answers, without the multi-stage syndrome differentiation procedures required in TCM.
+
+#### 1.3.3 READ-Loop evaluation on clinical diagnostic QA
+
+We evaluated the READ-Loop on 74 real CMB clinical cases. To simulate real-world diagnostic uncertainty, we extracted only the **chief complaint** from each full medical record as the initial input. An auxiliary LLM agent, with access to the complete clinical context, played the role of the patient to respond to the system's iterative questions. The primary metric is diagnostic accuracy, i.e., the fraction of cases where the system's terminal diagnosis matches the clinical ground truth. This configuration specifically probes whether the **CIA–SDA collaborative interaction** can bridge information gaps via active evidence acquisition, and whether such interaction yields measurable gains in diagnostic precision in a WM context.
 
 ---
 
@@ -49,7 +76,7 @@ Crucially, our experiments contrast specialized Convolutional Neural Networks (C
 
 ### 3.1 Fact-based Consistency Analysis
 
-To rigorously quantify the hallucination rate and logical fidelity of the generated narratives against the retrieved clinical evidence, we implement an **Atomic Statement Decomposition** approach. An LLM judge segments the generated response $R$ into discrete fact statements $S=\{s_1, s_2, \dots, s_n\}$, cross-referencing each against the retrieved context $C$ to classify them as *Supported*, *Contradicting*, or *Irrelevant*.
+To rigorously quantify the hallucination rate and logical fidelity of the generated narratives against the retrieved clinical evidence, we implement an **Atomic Statement Decomposition** approach. An LLM judge segments the generated response $R$ into discrete fact statements $S=s_1, s_2, \dots, s_n$, cross-referencing each against the retrieved context $C$ to classify them as *Supported*, *Contradicting*, or *Irrelevant*.
 
 The **Fidelity Score** ($Score_{fid}$) measures the proportion of claims strictly grounded in the retrieved evidence:
 
@@ -65,19 +92,19 @@ $$Score_{con}=\frac{N_{contradicting}}{N_{total}}$$
 
 Beyond factuality, an LLM judge evaluates the holistic quality of the outputs using a rigid 1-5 Likert Scale across three critical dimensions:
 
-* **Clinical Sufficiency**: Assesses the comprehensiveness and safety of the medical advice. High scores denote factually accurate, exhaustive clinical coverage (including side effects and contraindications), while low scores indicate severe omissions or safety risks.
-* **Task Compliance**: Measures strict adherence to user-specified constraints, including formatting requirements (e.g., JSON, list structures) and tone specifications.
-* **Citation Accuracy**: Evaluates the validity and traceability of references. Maximum scores demand that all claims are anchored to the provided context and free from fabricated citations.
+- **Clinical Sufficiency**: Assesses the comprehensiveness and safety of the medical advice. High scores denote factually accurate, exhaustive clinical coverage (including side effects and contraindications), while low scores indicate severe omissions or safety risks.
+- **Task Compliance**: Measures strict adherence to user-specified constraints, including formatting requirements (e.g., JSON, list structures) and tone specifications.
+- **Citation Accuracy**: Evaluates the validity and traceability of references. Maximum scores demand that all claims are anchored to the provided context and free from fabricated citations.
 
----
-
-## 4. Meta-Evaluation
+### 3.3 Meta-Evaluation
 
 To validate the clinical utility and reliability of the synthesized diagnostic reports, a blind meta-evaluation was conducted by a panel of 15 domain experts (7 clinicians and 8 medical researchers). The experts independently assessed 20 representative case reports using a 5-point Likert scale (1: severely deficient; 5: excellent) across five specialized dimensions:
 
-* **Evidence-Chain Completeness (ECC)**: The logical traceability from raw symptoms to the final syndrome differentiation.
-* **Syndrome-Differentiation Sufficiency (SDS)**: The clarity and rigor demonstrated in excluding differential patterns.
-* **Tongue-Image Utilization (TIU)**: The effectiveness of integrating multimodal visual data into the diagnostic narrative.
-* **Treatment-Plan Comprehensiveness (TPC)**: The inclusion of highly personalized therapeutic modalities.
-* **Diagnostic-Content Explainability (DCE)**: The clarity and accessibility of the plain-language interpretations provided to the patient.
+- **Evidence-Chain Completeness (ECC)**: The logical traceability from raw symptoms to the final syndrome differentiation.
+- **Syndrome-Differentiation Sufficiency (SDS)**: The clarity and rigor demonstrated in excluding differential patterns.
+- **Tongue-Image Utilization (TIU)**: The effectiveness of integrating multimodal visual data into the diagnostic narrative.
+- **Treatment-Plan Comprehensiveness (TPC)**: The inclusion of highly personalized therapeutic modalities.
+- **Diagnostic-Content Explainability (DCE)**: The clarity and accessibility of the plain-language interpretations provided to the patient.
+
+---
 
