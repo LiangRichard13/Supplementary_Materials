@@ -18,6 +18,7 @@ The repository is modularized to separate offline knowledge construction, core a
 ```text
 MedMirror_Code/
 ├── algorithm/                  # Algorithmic documentation and paper supplements
+├── demo/                       # Recorded system demonstration
 ├── doc/                        # Experimental setup and external KB specs
 ├── data/                       # Datasets, corpus files, and offline artifacts
 ├── model/                      # Local embedding and ranking model directories
@@ -30,6 +31,8 @@ MedMirror_Code/
 ### Directory Details
 
 - `algorithm/`: Contains theoretical formulations and architectural diagrams (e.g., `Paper_Algorithm.pdf`) that supplement the main manuscript, providing a detailed breakdown of the system's operational logic.
+- `demo/`: Contains a recorded system walkthrough for quick inspection of the end-to-end interaction and generated outputs:
+  - `system_demonstration.mp4`: Screen recording demonstrating the consultation flow, iterative inquiry, and final report generation.
 - `doc/`: Provides human-readable documentation that complements the paper and code:
   - `Experimental Setup Details.md`: Describes dataset splits, evaluation protocol, hyperparameters, hardware, and other experimental settings to support reproducibility.
   - `Detailed Specifications of External Knowledge Bases.md`: Specifies schema, construction pipeline, and usage patterns of external knowledge bases (e.g., Syndrome Knowledge Graph, medical case databases).
