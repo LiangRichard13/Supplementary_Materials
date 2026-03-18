@@ -30,7 +30,7 @@ MedMirror_Code/
 
 ### Directory Details
 
-- `algorithm/`: Contains theoretical formulations and architectural diagrams (e.g., `Paper_Algorithm.pdf`) that supplement the main manuscript, providing a detailed breakdown of the system's operational logic.
+- `algorithm/`: Contains implementation-oriented pseudocode and algorithmic supplements (e.g., `Paper_Algorithm.pdf`) that complement the main manuscript, providing a detailed breakdown of the system's operational logic.
 - `demo/`: Contains a recorded system walkthrough for quick inspection of the end-to-end interaction and generated outputs:
   - `system_demonstration.mp4`: Screen recording demonstrating the consultation flow, iterative inquiry, and final report generation.
 - `doc/`: Provides human-readable documentation that complements the paper and code:
