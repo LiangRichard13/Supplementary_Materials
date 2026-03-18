@@ -77,7 +77,7 @@ This graph database facilitates exact path consistency checks and ontological re
 
 This database provides authoritative theoretical grounding for the Cross-Task Shared References phase of the MPPR module.
 
-- **Source Data:** 81 canonical TCM texts sourced from the TCM-Ancient-Books repository([https://github.com/xiaopangxia/TCM-Ancient-Books](https://github.com/xiaopangxia/TCM-Ancient-Books)).
+- **Source Data:** 81 canonical TCM texts sourced from the TCM-Ancient-Books repository from Github.
 - **Preprocessing Pipeline:** To bridge the semantic gap between ancient texts and modern queries, an LLM translates the raw corpus into modern standard Chinese semantic representations prior to indexing.
 - **Text Segmentation:** Recursive character text splitting strategy with custom delimiters to preserve paragraph-level semantic coherence.
 - **Retrieval & Refinement:** Utilizes hybrid retrieval (Vector + Sparse). The initial recalled chunks undergo a secondary reranking evaluation. An LLM is then configured as an intelligent noise filter to synthesize and summarize the key theoretical evidence from the reranked chunks.
