@@ -21,6 +21,7 @@ MedMirror_Code/
 ├── demo/                       # Recorded system demonstration
 ├── doc/                        # Experimental setup and external KB specs
 ├── data/                       # Datasets, corpus files, and offline artifacts
+├── experiments/                # Supplementary experimental results omitted from the paper
 ├── model/                      # Local embedding and ranking model directories
 ├── prompts/                    # Centralized multi-agent prompt templates
 ├── report_example/             # Visualizations of generated diagnostic reports
@@ -40,6 +41,11 @@ MedMirror_Code/
   - Includes the VOC-formatted 5-class tongue image dataset (`tongue_5_class_dataset/`).
   - Contains the foundational corpora for knowledge graph construction (`syndrome_knowledge_graph/`), medical case vectorization (`syndrome_medical_cases/`), and hierarchical taxonomies (`syndrome_taxonomy/`).
   - *Note: Persistent artifacts like Chroma vector stores are generated and stored here during the offline build phase.*
+- `experiments/`: Contains supplementary experimental results and analyses that could not be included in the main manuscript due to space constraints:
+  - `experiments.md`: Detailed reports on tongue diagnosis model comparison, scalability analysis, cross-domain evaluation on the CMB benchmark, and cost-efficiency analysis.
+  - `tongue_diagnosis_comparison.png`: Performance comparison of general MLLMs and specialized CNNs in tongue image classification.
+  - `scalability_analysis.png`: Scalability evaluation on the Qwen2.5 series.
+  - `cost_efficiency_analysis.png`: Cost-efficiency analysis of computational overhead versus diagnostic precision.
 - `model/`: Designated directory for local model weights, specifically medical-domain Chinese sentence embedding models (e.g., `nlp_corom_sentence-embedding`) and ranking models (e.g., `nlp_gte_sentence-embedding`).
 - `prompts/`: The cognitive core of the multi-agent system. Prompts are organized by task domain (e.g., `mppr.py`, `raid.py`, `read_loop.py`, `tongue_diagnosis.py`), abstracting the instructional logic for content planning, targeted inquiry, and reflexive drafting.
 - `report_example/`: Contains sample outputs (`1.png` - `8.png`) demonstrating the system's final multimodal diagnostic reports, highlighting clinical sufficiency and explainability.
