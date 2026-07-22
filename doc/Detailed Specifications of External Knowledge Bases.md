@@ -6,7 +6,7 @@ This document outlines the construction details, preprocessing pipelines, and re
 
 This database provides case-based evidence for preliminary logical deduction during the syndrome differentiation phase.
 
-- **Source Data:** 1,027 structured medical records from the TCM-SD training set.
+- **Source Data:** 43180  medical records from the TCM-SD training set.
 - **Feature Engineering:** The "Chief Complaint" and "Case Description" fields are concatenated as text inputs for the embedding model, while the "Confirmed Syndrome" is retained as metadata.
 - **Embedding Model:** CoROM-Medical-Base.
 - **Storage Solution:** Chroma vector database.
